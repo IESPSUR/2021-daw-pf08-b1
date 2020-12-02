@@ -14,3 +14,4 @@ public abstract class DadoBase implements IDado{
 	}
 
 }
+/* primer comentario */
