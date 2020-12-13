@@ -27,6 +27,7 @@ public abstract class JugadorBasico implements IJugador {
 
 	public JugadorBasico() {
 		// TODO Auto-generated constructor stub
+		//Modificación david
 	}
 
 	public String getNombre() {
