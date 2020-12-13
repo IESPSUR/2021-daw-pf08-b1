@@ -6,6 +6,6 @@ public interface IDado {
 	 * 
 	 * @return
 	 */
-	public int lanzarDado();
+	public void lanzarDado();
 
 }
