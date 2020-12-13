@@ -11,53 +11,54 @@ import java.util.Scanner;
  */
 public abstract class JugadorBasico implements IJugador {
 
+	// Creando las variables
 	private String nombre;
 	private int velocidadPunta;
 	private int ultimaTirada;
 	private int recorrido;
 	private String caminos;
 	private DadoBase dado;
+	private final static int pista = 100;
+	private int[] velocidadNum = new int[pista];
+	private int contVelo = -1;
 	private TipoJugador tipo;
 
+	/**
+	 * El constructor
+	 * 
+	 * @param nombre Recibe el nombre del jugador
+	 */
 	public JugadorBasico(String nombre) {
 		this.nombre = nombre;
 	}
 
-	public int getUltimaTirada() {
-		return ultimaTirada;
-	}
-
-	public void setUltimaTirada(int ultimaTirada) {
-		this.ultimaTirada = ultimaTirada;
-	}
-
-	public JugadorBasico() {
-		// TODO Auto-generated constructor stub
-		// Modificación david
-	}
-
 	@Override
 	public String getNombre() {
-		// TODO Auto-generated method stub
 		return nombre;
 	}
 
 	@Override
 	public TipoJugador getTipo() {
-		// TODO Auto-generated method stub
 		return tipo;
 	}
 
 	@Override
 	public int getVelocidadUltimoTurno() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ultimaTirada;
 	}
 
+	/**
+	 * Devuelve la velocidad máxima de cada jugador
+	 */
 	@Override
 	public int getVelocidadAlcanzadaMaxima() {
-		// TODO Auto-generated method stub
-		return 0;
+		int VelocidadMax = 0;
+		for (int i = 0; i < velocidadNum.length - 1; i++) {
+			if (velocidadNum[i] > VelocidadMax) {
+				VelocidadMax = velocidadNum[i];
+			}
+		}
+		return VelocidadMax;
 	}
 
 	@Override
@@ -65,22 +66,34 @@ public abstract class JugadorBasico implements IJugador {
 		setCaminos("");
 		setRecorridoCero(0);
 		setUltimaTirada(0);
+
 	}
 
+	/**
+	 * Con este método el jugador avanza en la consola dependiendo del número del
+	 * dado
+	 */
 	@Override
 	public void avanza() {
-		dado.lanzarDado();
-		if (getRecorrido() >= 100) {
+		if (getRecorrido() >= pista) {
 			setUltimaTirada(dado.getDado());
 		} else {
 			System.out.println(getCaminos() + getNombre());
 		}
 	}
 
+	/**
+	 * Determina los caminos que se tienen que pintar dependiendo del número que
+	 * salga
+	 * 
+	 * @param recorrido
+	 */
 	public void setRecorrido(int recorrido) {
+		contVelo++;
 		for (int i = 0; i < recorrido; i++) {
 			caminos = caminos + " ";
 		}
+		velocidadNum[contVelo] = recorrido;// Rellenando un array de velocidades para después saber la máxima velocidad
 		this.recorrido = this.recorrido + recorrido;
 	}
 
@@ -98,6 +111,10 @@ public abstract class JugadorBasico implements IJugador {
 
 	public void setCaminos(String caminos) {
 		this.caminos = caminos;
+	}
+
+	public void setUltimaTirada(int ultimaTirada) {
+		this.ultimaTirada = ultimaTirada;
 	}
 
 }
