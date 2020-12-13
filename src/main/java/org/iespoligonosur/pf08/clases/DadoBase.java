@@ -4,27 +4,28 @@ import java.util.Random;
 
 /**
  * Definicion de una clase base para la implementacion de dados de N caras
+ * 
  * @author eserrano
  *
  */
-public abstract class DadoBase implements IDado{
+public abstract class DadoBase implements IDado {
 
-	 private int numeroCaras;
-	    private int resultadoDado;
+	private int numeroCaras;
+	private int resultadoDado=0;
 
-	    public DadoBase(int numeroCaras) {
-	    	this.numeroCaras = numeroCaras;
-	    }
-	    
-	    @Override
-		public void lanzarDado() {
-		 Random dadoBase = new Random();
-		 resultadoDado = 1 + dadoBase.nextInt(numeroCaras);
-	 }
+	public DadoBase(int numeroCaras) {
+		this.numeroCaras = numeroCaras;
+	}
 
-		public int getDado() {
-			return resultadoDado;
-		}
+	@Override
+	public void lanzarDado() {
+		Random dadoBase = new Random();
+		resultadoDado = 1 + dadoBase.nextInt(numeroCaras);
+	}
+
+	public int getDado() {
+		return resultadoDado;
+	}
 
 }
 /* primer comentario */
