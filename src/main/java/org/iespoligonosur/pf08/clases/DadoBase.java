@@ -11,19 +11,15 @@ import java.util.Random;
 public abstract class DadoBase implements IDado {
 
 	private int numeroCaras;
-	private int resultadoDado=0;
 
 	public DadoBase(int numeroCaras) {
 		this.numeroCaras = numeroCaras;
 	}
 
 	@Override
-	public void lanzarDado() {
+	public int lanzarDado() {
 		Random dadoBase = new Random();
-		resultadoDado = 1 + dadoBase.nextInt(numeroCaras);
-	}
-
-	public int getDado() {
+		int resultadoDado = 1 + dadoBase.nextInt(numeroCaras);
 		return resultadoDado;
 	}
 
