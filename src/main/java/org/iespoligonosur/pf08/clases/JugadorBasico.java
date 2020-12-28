@@ -1,7 +1,5 @@
 package org.iespoligonosur.pf08.clases;
 
-import java.util.Scanner;
-
 /**
  * Clases base de Jugadores. Se deben implemenntar las clases hijas Tortuga,
  * Liebre y CorreCaminos
@@ -13,14 +11,12 @@ public abstract class JugadorBasico implements IJugador {
 
 	// Creando las variables
 	private String nombre;
-	private int velocidadPunta;
 	private int ultimaTirada;
 	private int recorrido = 0;
 	private String caminos = "";
 	private final static int pista = 100;
 	private int[] velocidadNum = new int[pista];
 	private int contVelo = -1;
-	private TipoJugador tipo;
 
 	/**
 	 * El constructor
@@ -31,15 +27,19 @@ public abstract class JugadorBasico implements IJugador {
 		this.nombre = nombre;
 	}
 
+	/**
+	 * Con este método el jugador avanza en la consola dependiendo del número del
+	 * dado
+	 */
+	@Override
+	public abstract void avanza();
+	
+	
 	@Override
 	public String getNombre() {
 		return nombre;
 	}
 
-	@Override
-	public TipoJugador getTipo() {
-		return tipo;
-	}
 
 	@Override
 	public int getVelocidadUltimoTurno() {
@@ -63,17 +63,11 @@ public abstract class JugadorBasico implements IJugador {
 	@Override
 	public void resetea() {
 		setCaminos("");
-		setRecorridoCero(0);
+		setRecorrido(0);
 		setUltimaTirada(0);
+		contVelo=-1;
 
 	}
-
-	/**
-	 * Con este método el jugador avanza en la consola dependiendo del número del
-	 * dado
-	 */
-	@Override
-	public abstract void avanza();
 
 	/**
 	 * Determina los caminos que se tienen que pintar dependiendo del número que
@@ -82,7 +76,7 @@ public abstract class JugadorBasico implements IJugador {
 	 * @param recorrido
 	 */
 	
-	public void setRecorrido(int recorrido) {
+	public void setRecorridoTotal(int recorrido) {
 		contVelo++;
 		for (int i = 0; i < recorrido; i++) {
 			caminos = caminos + "-";
@@ -91,7 +85,7 @@ public abstract class JugadorBasico implements IJugador {
 		this.recorrido = this.recorrido + recorrido;
 	}
 
-	public void setRecorridoCero(int recorrido) {
+	public void setRecorrido(int recorrido) {
 		this.recorrido = recorrido;
 	}
 
