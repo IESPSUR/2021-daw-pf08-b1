@@ -4,14 +4,16 @@ import java.util.Scanner;
 
 public class Liebre extends JugadorBasico {
 
+	//Variables
 	TipoJugador tipo = TipoJugador.LIEBRE;
 	Dado dado = new Dado(6);
 
+	//El constructor
 	public Liebre(String nombre) {
 		super(nombre);
 	}
 
-	@Override
+	
 	public TipoJugador getTipo() {
 		return tipo;
 	}
@@ -49,7 +51,9 @@ public class Liebre extends JugadorBasico {
 				}
 			}
 		}
-		sc.close();
 	}
+
+
+	
 
 }

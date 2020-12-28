@@ -27,20 +27,6 @@ public abstract class JugadorBasico implements IJugador {
 		this.nombre = nombre;
 	}
 
-	/**
-	 * Con este método el jugador avanza en la consola dependiendo del número del
-	 * dado
-	 */
-	@Override
-	public abstract void avanza();
-	
-	
-	@Override
-	public String getNombre() {
-		return nombre;
-	}
-
-
 	@Override
 	public int getVelocidadUltimoTurno() {
 		return ultimaTirada;
@@ -103,6 +89,11 @@ public abstract class JugadorBasico implements IJugador {
 
 	public void setUltimaTirada(int ultimaTirada) {
 		this.ultimaTirada = ultimaTirada;
+	}
+	
+	@Override
+	public String getNombre() {
+		return nombre;
 	}
 
 }
