@@ -1,7 +1,4 @@
 package org.iespoligonosur.pf08.clases;
-
-import java.util.Scanner;
-
 /**
  * Clases base de Jugadores. Se deben implemenntar las clases hijas Tortuga,
  * Liebre y CorreCaminos
