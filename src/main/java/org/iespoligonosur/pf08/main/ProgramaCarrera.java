@@ -6,7 +6,7 @@ import org.iespoligonosur.pf08.clases.IJugador;
 
 public class ProgramaCarrera {
 
-	//Array con los jugadores Kimia Test Git
+	//Array con los jugadores
 	private IJugador [] jugadores = new IJugador[6];
 	private int longitudPistaCarreras=100;
 	private int turno;

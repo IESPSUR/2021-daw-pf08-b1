@@ -109,4 +109,5 @@ public abstract class JugadorBasico implements IJugador {
 		return nombre;
 	}
 
+
 }
