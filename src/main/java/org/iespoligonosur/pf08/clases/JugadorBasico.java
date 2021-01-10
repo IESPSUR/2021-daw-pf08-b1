@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public abstract class JugadorBasico implements IJugador {
 
-	// Creando las variables Kim
+	// Creando las variables
 			private String nombre;
 			private int ultimaTirada;
 			private int recorrido = 0;
