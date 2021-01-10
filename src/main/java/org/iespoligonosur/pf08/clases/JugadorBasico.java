@@ -1,5 +1,7 @@
 package org.iespoligonosur.pf08.clases;
 
+import java.util.Scanner;
+
 /**
  * Clases base de Jugadores. Se deben implemenntar las clases hijas Tortuga,
  * Liebre y CorreCaminos
@@ -9,7 +11,7 @@ package org.iespoligonosur.pf08.clases;
  */
 public abstract class JugadorBasico implements IJugador {
 
-	// Creando las variables
+	// Creando las variables Kimia 
 			private String nombre;
 			private int ultimaTirada;
 			private int recorrido = 0;
