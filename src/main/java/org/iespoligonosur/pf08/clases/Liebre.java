@@ -53,4 +53,5 @@ public class Liebre extends JugadorBasico {
 		}
 	}
 
+	
 }
