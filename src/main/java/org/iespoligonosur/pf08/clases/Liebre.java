@@ -15,6 +15,7 @@ public class Liebre extends JugadorBasico {
 
 	public TipoJugador getTipo() {
 		return tipo;
+
 	}
 
 	@Override
@@ -53,5 +54,4 @@ public class Liebre extends JugadorBasico {
 		}
 	}
 
-	
 }
