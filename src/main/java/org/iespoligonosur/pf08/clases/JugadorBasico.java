@@ -87,6 +87,10 @@ public abstract class JugadorBasico implements IJugador {
 		return nombre;
 	}
 
+	public void setVelocidadMedia(double media) {
+		this.media = media;
+	}
+
 	@Override
 	public int getVelocidadUltimoTurno() {
 		return ultimaTirada;

@@ -4,5 +4,4 @@ public enum TipoJugador {
 		TORTUGA,
 		LIEBRE,
 		CORRECAMINOS
-//buenas tardes alejandro
 }

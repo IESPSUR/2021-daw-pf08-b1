@@ -15,6 +15,7 @@ public class Liebre extends JugadorBasico {
     //El getter del tipo del jugador
 	public TipoJugador getTipo() {
 		return tipo;
+
 	}
     /**
      * Sobreescribir el método avanza de la interface IJugador
