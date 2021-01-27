@@ -14,9 +14,9 @@ public abstract class JugadorBasico implements IJugador {
 	private int ultimaTirada;
 	private int recorrido = 0;
 	private String caminos = "";
+	private int velocidadPunta;
 	private double media;
 	private final static int pista = 100;
-	private int[] velocidadNum = new int[pista];
 	private int contVelo = -1;
 
 	/**
@@ -29,17 +29,28 @@ public abstract class JugadorBasico implements IJugador {
 	}
 
 	/**
+	 * Determina los caminos que se tienen que pintar dependiendo del número que
+	 * salga y el recorrido total del jugador en la partida.
+	 * 
+	 * @param recorrido
+	 */
+	public void setRecorridoTotal(int recorrido) {
+		if (recorrido > velocidadPunta) {
+			velocidadPunta = recorrido;
+		}
+		contVelo++;
+		for (int i = 0; i < recorrido; i++) {
+			setCaminos(getCaminos() + "-");
+		}
+		this.recorrido = this.recorrido + recorrido;
+	}
+
+	/**
 	 * Devuelve la velocidad máxima de cada jugador devuelve la velocidad máxima
 	 */
 	@Override
 	public int getVelocidadAlcanzadaMaxima() {
-		int VelocidadMax = 0;
-		for (int i = 0; i < (contVelo + 1); i++) {
-			if (velocidadNum[i] > VelocidadMax) {
-				VelocidadMax = velocidadNum[i];
-			}
-		}
-		return VelocidadMax;
+		return velocidadPunta;
 	}
 
 	/**
@@ -47,28 +58,10 @@ public abstract class JugadorBasico implements IJugador {
 	 * 
 	 * @return devulve la media
 	 */
+	@Override
 	public double getVelocidadMedia() {
-		double sum = 0;
-		for (int i = 0; i < velocidadNum.length; i++) {
-			sum = sum + velocidadNum[i];
-		}
-		media = sum / contVelo + 1;
+		media = getRecorrido() / contVelo;
 		return media;
-	}
-
-	/**
-	 * Determina los caminos que se tienen que pintar dependiendo del número que
-	 * salga y el recorrido total del jugador en la partida.
-	 * 
-	 * @param recorrido
-	 */
-	public void setRecorridoTotal(int recorrido) {
-		contVelo++;
-		for (int i = 0; i < recorrido; i++) {
-			setCaminos(getCaminos() + "-");
-		}
-		velocidadNum[contVelo] = recorrido;// Rellenando un array de velocidades para después saber la máxima velocidad
-		this.recorrido = this.recorrido + recorrido;
 	}
 
 	/**
@@ -100,10 +93,12 @@ public abstract class JugadorBasico implements IJugador {
 		this.recorrido = recorrido;
 	}
 
+	@Override
 	public int getRecorrido() {
 		return recorrido;
 	}
 
+	@Override
 	public String getCaminos() {
 		return caminos;
 	}
