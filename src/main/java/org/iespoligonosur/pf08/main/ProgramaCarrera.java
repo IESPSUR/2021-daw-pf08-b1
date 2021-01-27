@@ -12,10 +12,10 @@ import org.iespoligonosur.pf08.clases.JugadorBasico;
 public class ProgramaCarrera {
 
 	// Array con los jugadores
-	private JugadorBasico[] jugadores = new JugadorBasico[6];
+	private IJugador[] jugadores = new IJugador[6];
 	private int longitudPistaCarreras = 100;
-	private int turno;
 	private int ganador;
+	private int turno;
 	private LocalDateTime inicioPartida;
 	private LocalDateTime finalPartida;
 
@@ -94,7 +94,7 @@ public class ProgramaCarrera {
 		String formatDateFin = finalPartida.format(DateHour);
 		System.out.println("La hora y la fecha del inicio de la partida: " + formatDateIni
 				+ "\nLa hora y la fecha del final de la partida: " + formatDateFin + "\nLa duración: " + duracion
-				+ "minutos.");
+				+ " minutos.");
 		System.out.println("En esta partida han participado " + jugadores.length + " usuarios.");
 		System.out.println("El jugador con maxima velocidad punta: " + masVeloz().getNombre() + ". La velocidad: "
 				+ masVeloz().getVelocidadAlcanzadaMaxima());
@@ -103,9 +103,8 @@ public class ProgramaCarrera {
 		DecimalFormat df = new DecimalFormat("#.00");
 		String mediaF = df.format(mayorMedia().getVelocidadMedia());
 
-		System.out.println("El jugador con maxima media de velocidad punta: " + mayorMedia().getNombre()
-				+ ". La velocidad:" + mediaF);
-		System.out.println("El ranking:");
+		System.out.println("El jugador con maxima velocidad media: " + mayorMedia().getNombre()
+				+ ". La velocidad: " + mediaF);
 		imprimeJugadoresOrdenados(ordenaRanking());
 	}
 
@@ -131,8 +130,8 @@ public class ProgramaCarrera {
 	 * 
 	 * @return
 	 */
-	private JugadorBasico mayorMedia() {
-		JugadorBasico velMaxMedJugador = jugadores[0];
+	private IJugador mayorMedia() {
+		IJugador velMaxMedJugador = jugadores[0];
 		for (int i = 0; i < jugadores.length; i++) {
 			if (jugadores[i].getVelocidadMedia() > velMaxMedJugador.getVelocidadMedia()) {
 				velMaxMedJugador = jugadores[i];
