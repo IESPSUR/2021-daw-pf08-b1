@@ -26,7 +26,6 @@ public class Liebre extends JugadorBasico {
 		if (dadoValor == 3) {
 			setRecorridoTotal(dadoValor);
 			setUltimaTirada(dadoValor);
-			System.out.println(getCaminos() + getNombre());
 		} else {
 			apuesta(dadoValor);
 		}
@@ -57,9 +56,8 @@ public class Liebre extends JugadorBasico {
 		if (res.equalsIgnoreCase(mayMen)) {
 			setUltimaTirada(dadoValor);
 			setRecorridoTotal(dadoValor);
-			System.out.println(getCaminos() + getNombre());
 		} else {
-			System.out.println(getCaminos() + getNombre() + ": No puede mover");
+			System.out.println("No has acertado!! No podrás avanzar!");
 		}
 
 	}

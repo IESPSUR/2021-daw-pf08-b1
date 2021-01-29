@@ -25,9 +25,6 @@ public class Tortuga extends JugadorBasico {
 		 
 			setRecorridoTotal(dadoValor);
 			setUltimaTirada(dadoValor);
-			System.out.println(getCaminos() + getNombre());
-		
-
 	}
 	
 }

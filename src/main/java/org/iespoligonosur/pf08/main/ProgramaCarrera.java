@@ -54,7 +54,7 @@ public class ProgramaCarrera {
 	 * Este metodo realiza una representacion grafica en consola de la pista y la
 	 * posicion de los jugadores en la misma
 	 */
-	private void pintaCarrera() {
+	private void pintaCarrera(IJugador jugador) {
 
 	}
 
@@ -66,6 +66,7 @@ public class ProgramaCarrera {
 
 		for (int i = 0; i < jugadores.length; i++) {
 			jugadores[i].avanza();
+			pintaCarrera(jugadores[i]);
 			if (jugadores[i].getRecorrido() >= longitudPistaCarreras) {
 				ganador = i;
 				break;
@@ -87,7 +88,7 @@ public class ProgramaCarrera {
 		}
 		LocalTime ini = inicioPartida.toLocalTime();
 		LocalTime fin = finalPartida.toLocalTime();
-
+		imprimeJugadoresOrdenados(ordenaRanking());
 		int duracion = (int) ChronoUnit.MINUTES.between(ini, fin);
 		DateTimeFormatter DateHour = DateTimeFormatter.ofPattern("dd MM yyyy hh:mm:ss");
 		String formatDateIni = inicioPartida.format(DateHour);
@@ -105,7 +106,7 @@ public class ProgramaCarrera {
 
 		System.out.println("El jugador con maxima velocidad media: " + mayorMedia().getNombre()
 				+ ". La velocidad: " + mediaF);
-		imprimeJugadoresOrdenados(ordenaRanking());
+	
 	}
 
 	/**
