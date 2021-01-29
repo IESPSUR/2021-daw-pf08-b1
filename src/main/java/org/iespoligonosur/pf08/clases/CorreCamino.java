@@ -17,7 +17,7 @@ public class CorreCamino extends JugadorBasico {
 	@Override
 	public TipoJugador getTipo() {
 
-		return null;
+		return tipo;
 	}
 
 	@Override
