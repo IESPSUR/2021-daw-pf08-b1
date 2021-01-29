@@ -113,10 +113,10 @@ public class ProgramaCarrera {
 	 * Este metodo realiza una representacion grafica en consola de la pista y la
 	 * posicion de los jugadores en la misma
 	 */
+
 	private static void pintaCarrera(IJugador jugador) {
 		System.out.println(jugador.getCaminos() + jugador.getNombre());
 	}
-
 	/**
 	 * Este metodo llama al metodo avanza para cada uno de los participantes de la
 	 * carrea para ejecutar un turno de la carrera
@@ -152,6 +152,7 @@ public class ProgramaCarrera {
 		imprimeJugadoresOrdenados(ordenaRanking());
 		System.out.println("__________________________________________________________________");
 
+		imprimeJugadoresOrdenados(ordenaRanking());
 		int duracion = (int) ChronoUnit.MINUTES.between(ini, fin);
 		DateTimeFormatter DateHour = DateTimeFormatter.ofPattern("dd MM yyyy hh:mm:ss");
 		String formatDateIni = inicioPartida.format(DateHour);
@@ -167,9 +168,13 @@ public class ProgramaCarrera {
 		DecimalFormat df = new DecimalFormat("#.00");
 		String mediaF = df.format(mayorMedia().getVelocidadMedia());
 
+
 		System.out.println(
 				"El jugador con maxima velocidad media: " + mayorMedia().getNombre() + ". La velocidad: " + mediaF);
 
+		System.out.println("El jugador con maxima velocidad media: " + mayorMedia().getNombre()
+				+ ". La velocidad: " + mediaF);
+	
 	}
 
 	/**

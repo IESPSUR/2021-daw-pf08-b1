@@ -1,6 +1,5 @@
 package org.iespoligonosur.pf08.clases;
 
-
 public class Tortuga extends JugadorBasico {
 
 	// Variables
@@ -11,20 +10,19 @@ public class Tortuga extends JugadorBasico {
 	public Tortuga(String nombre) {
 		super(nombre);
 	}
-    //El getter del tipo del jugador
+
+	// El getter del tipo del jugador
 	public TipoJugador getTipo() {
 		return tipo;
 
 	}
-    /**
-     * Sobreescribir el método avanza de la interface IJugador
-     */
+
 	@Override
 	public void avanza() {
 		int dadoValor = dado.lanzarDado();
-		 
-			setRecorridoTotal(dadoValor);
-			setUltimaTirada(dadoValor);
+
+		setRecorridoTotal(dadoValor);
+		setUltimaTirada(dadoValor);
 	}
-	
+
 }

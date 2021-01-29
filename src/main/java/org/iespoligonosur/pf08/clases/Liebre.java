@@ -12,14 +12,16 @@ public class Liebre extends JugadorBasico {
 	public Liebre(String nombre) {
 		super(nombre);
 	}
-    //El getter del tipo del jugador
+
+	// El getter del tipo del jugador
 	public TipoJugador getTipo() {
 		return tipo;
 
 	}
-    /**
-     * Sobreescribir el método avanza de la interface IJugador
-     */
+
+	/**
+	 * Sobreescribir el método avanza de la interface IJugador
+	 */
 	@Override
 	public void avanza() {
 		int dadoValor = dado.lanzarDado();
@@ -34,6 +36,7 @@ public class Liebre extends JugadorBasico {
 
 	/**
 	 * El método apuesta que en el caso que el jugador acierte, avanza.
+	 * 
 	 * @param dadoValor
 	 */
 	private void apuesta(int dadoValor) {
@@ -58,8 +61,8 @@ public class Liebre extends JugadorBasico {
 			setRecorridoTotal(dadoValor);
 		} else {
 			System.out.println("No has acertado!! No podr�s avanzar!");
+
 		}
 
 	}
-
 }
