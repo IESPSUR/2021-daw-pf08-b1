@@ -28,10 +28,9 @@ public class CorreCamino extends JugadorBasico {
 		if (dadoValor % 2 == 0) {
 			setRecorridoTotal(dadoValor);
 			setUltimaTirada(dadoValor);
-			System.out.println(getCaminos() + getNombre());
 
 		} else {
-			System.out.println(getCaminos() + getNombre() + " No puede avanzar.");
+			System.out.println("No ha salido un número par!! No podrás avanzar!");
 		}
 
 	}

@@ -5,22 +5,25 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.*;
 
+import org.iespoligonosur.pf08.clases.CorreCamino;
 import org.iespoligonosur.pf08.clases.IJugador;
-import org.iespoligonosur.pf08.clases.JugadorBasico;
+import org.iespoligonosur.pf08.clases.Liebre;
+import org.iespoligonosur.pf08.clases.Tortuga;
 
 public class ProgramaCarrera {
 
-	// Array con los jugadores
-	private IJugador[] jugadores = new IJugador[6];
-	private int longitudPistaCarreras = 100;
-	private int ganador;
-	private int turno;
-	private LocalDateTime inicioPartida;
-	private LocalDateTime finalPartida;
+	private static IJugador[] jugadores;
+
+	private static int longitudPistaCarreras = 100;
+	private static LocalDateTime inicioPartida;
+	private static LocalDateTime finalPartida;
+	private static int ganador;
+	static Scanner sc = new Scanner(System.in);
+	private static int numero = 0;
 
 	public ProgramaCarrera() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -31,55 +34,113 @@ public class ProgramaCarrera {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("Bienvenido al juego");
+		do {
+			System.out.println("�Cu�ntos usuarios van a jugar?");
+			numero = sc.nextInt();
+			if (2 > numero || numero > 6) {
+				System.out.println("Numero incorrecto, el numero de jugadores es de 2 a 6 usuarios por partida");
+			}
+		} while (2 > numero || numero > 6);
+		jugadores = new IJugador[numero];
+		creaJugadores();
+		iniciaPartida();
+		ejecutaTurno();
 	}
 
 	/**
 	 * Este metodo se encarga de crear uno a uno hasta 6 jugadores con la ayuda del
-	 * usuario que introduce los datos a través de la consola.
+	 * usuario que introduce los datos a traves de la consola.
 	 */
-	private void creaJugadores() {
+	private static void creaJugadores() {
+
+		int animal;
+		for (int i = 0; i < numero; i++) {
+
+			do {
+				System.out.println("Jugador " + (i + 1) + ": ");
+				System.out.println("�Cual quieres que sea tu alias en el juego?");
+				String nombreUsu = sc.next();
+				System.out.println("Elige el animal que quieras:\n 1.Tortuga\n 2.Liebre\n 3.CorreCaminos");
+				animal = sc.nextInt();
+
+				switch (animal) {
+				case 1:
+					jugadores[i] = new Tortuga(nombreUsu);
+					break;
+				case 2:
+					jugadores[i] = new Liebre(nombreUsu);
+					break;
+				case 3:
+					jugadores[i] = new CorreCamino(nombreUsu);
+					break;
+				}
+			} while (animal > 3 || animal <= 0);
+
+		}
 
 	}
 
-	/**
+	/*
 	 * Este metodo inicia la partida con los jugadores ya previamente creados por el
 	 * usuario La partida termina cuando cualquiera de los jugadores recorre toda la
 	 * longitud determinada para la pista alcanzando la meta.
 	 */
-	private void iniciaPartida() {
+	private static void iniciaPartida() {
+		System.out.println("�Empieza la partida!");
+		pintaIniPartida();
+		inicioPartida = LocalDateTime.now();
 
+		while (jugadores[ganador].getRecorrido() < longitudPistaCarreras) {
+			System.out.println("Turno Siguiente:");
+			ejecutaTurno();
+		}
+		System.out.println("La partida ha terminado");
+		finalPartida = LocalDateTime.now();
+		imprimeEstadisticaCarrera();
+		System.exit(0);
+	}
+
+	private static void pintaIniPartida() {
+		for (int i = 0; i < jugadores.length; i++) {
+			System.out.println(jugadores[i].getNombre() + "-->");
+		}
 	}
 
 	/**
 	 * Este metodo realiza una representacion grafica en consola de la pista y la
 	 * posicion de los jugadores en la misma
 	 */
-	private void pintaCarrera() {
-
+	private static void pintaCarrera(IJugador jugador) {
+		System.out.println(jugador.getCaminos() + jugador.getNombre());
 	}
 
 	/**
 	 * Este metodo llama al metodo avanza para cada uno de los participantes de la
 	 * carrea para ejecutar un turno de la carrera
 	 */
-	private void ejecutaTurno() {
+	private static void ejecutaTurno() {
 
 		for (int i = 0; i < jugadores.length; i++) {
 			jugadores[i].avanza();
+			pintaCarrera(jugadores[i]);
 			if (jugadores[i].getRecorrido() >= longitudPistaCarreras) {
 				ganador = i;
 				break;
 			}
 		}
+
 	}
 
 	/**
-	 * Este método debe imprimir la estadística de la carrera Fecha y Hora de la
-	 * realización Duración en minutos Número de participantes Ranking de
-	 * participantes Velocidad Punta Máxima y Jugador que la alcanzó Velocidad Media
-	 * más alta y jugador que la alcanzo
+	 * Este metodo debe imprimir la estadistica de la carrera Fecha y Hora de la
+	 * realizacion Duracion en minutos Numero de participantes Ranking de
+	 * participantes Velocidad Punta Maxima y Jugador que la alcanzo Velocidad Media
+	 * mas alta y jugador que la alcanzo
 	 */
-	private void imprimeEstadisticaCarrera() {
+	private static void imprimeEstadisticaCarrera() {
 
 		System.out.println("\nEl Resultado: ");
 		for (int i = 0; i < jugadores.length; i++) {
@@ -88,13 +149,16 @@ public class ProgramaCarrera {
 		LocalTime ini = inicioPartida.toLocalTime();
 		LocalTime fin = finalPartida.toLocalTime();
 
+		imprimeJugadoresOrdenados(ordenaRanking());
+		System.out.println("__________________________________________________________________");
+
 		int duracion = (int) ChronoUnit.MINUTES.between(ini, fin);
 		DateTimeFormatter DateHour = DateTimeFormatter.ofPattern("dd MM yyyy hh:mm:ss");
 		String formatDateIni = inicioPartida.format(DateHour);
 		String formatDateFin = finalPartida.format(DateHour);
-		System.out.println("La hora y la fecha del inicio de la partida: " + formatDateIni
-				+ "\nLa hora y la fecha del final de la partida: " + formatDateFin + "\nLa duración: " + duracion
-				+ " minutos.");
+		System.out.println("La partida comenzo: " + formatDateIni + "\nLa partida termino: " + formatDateFin
+				+ "\nLa partida duro: " + duracion + " minutos.");
+		System.out.println("__________________________________________________________________");
 		System.out.println("En esta partida han participado " + jugadores.length + " usuarios.");
 		System.out.println("El jugador con maxima velocidad punta: " + masVeloz().getNombre() + ". La velocidad: "
 				+ masVeloz().getVelocidadAlcanzadaMaxima());
@@ -103,9 +167,9 @@ public class ProgramaCarrera {
 		DecimalFormat df = new DecimalFormat("#.00");
 		String mediaF = df.format(mayorMedia().getVelocidadMedia());
 
-		System.out.println("El jugador con maxima velocidad media: " + mayorMedia().getNombre()
-				+ ". La velocidad: " + mediaF);
-		imprimeJugadoresOrdenados(ordenaRanking());
+		System.out.println(
+				"El jugador con maxima velocidad media: " + mayorMedia().getNombre() + ". La velocidad: " + mediaF);
+
 	}
 
 	/**
@@ -114,7 +178,8 @@ public class ProgramaCarrera {
 	 * 
 	 * @return
 	 */
-	private IJugador masVeloz() {
+	private static IJugador masVeloz() {
+
 		IJugador velMaxJugador = jugadores[0];
 		for (int i = 0; i < jugadores.length; i++) {
 			if (jugadores[i].getVelocidadAlcanzadaMaxima() > velMaxJugador.getVelocidadAlcanzadaMaxima()) {
@@ -130,7 +195,7 @@ public class ProgramaCarrera {
 	 * 
 	 * @return
 	 */
-	private IJugador mayorMedia() {
+	private static IJugador mayorMedia() {
 		IJugador velMaxMedJugador = jugadores[0];
 		for (int i = 0; i < jugadores.length; i++) {
 			if (jugadores[i].getVelocidadMedia() > velMaxMedJugador.getVelocidadMedia()) {
@@ -141,19 +206,40 @@ public class ProgramaCarrera {
 	}
 
 	/**
-	 * Método que devuelve un array de Jugadores con los jugadores de la partida
+	 * Metodo que devuelve un array de Jugadores con los jugadores de la partida
 	 * ordenados por puesto de carrera. En caso de que dos jugadores lleguen a meta
 	 * en el mismo turno, o sin llegar a meta empaten en el numero de pasos
 	 * recorridos, gana aquel que su velocidad en el ultimo turno fuera mas alta
 	 * 
 	 * @return
 	 */
-	private IJugador[] ordenaRanking() {
-		return null;
+	private static IJugador[] ordenaRanking() {
+
+		IJugador aux;
+		for (int i = 0; i < jugadores.length - 1; i++) {
+			for (int j = i; j < jugadores.length; j++) {
+				if (jugadores[j].getRecorrido() > jugadores[i].getRecorrido()) {
+					aux = jugadores[i];
+					jugadores[i] = jugadores[j];
+					jugadores[j] = aux;
+				} else if (jugadores[j].getRecorrido() == jugadores[i].getRecorrido()) {
+					if (jugadores[j].getVelocidadUltimoTurno() > jugadores[i].getVelocidadUltimoTurno()) {
+						aux = jugadores[i];
+						jugadores[i] = jugadores[j];
+						jugadores[j] = aux;
+					}
+				}
+			}
+		}
+		return jugadores;
 	}
 
-	private void imprimeJugadoresOrdenados(IJugador[] arrayJug) {
+	private static void imprimeJugadoresOrdenados(IJugador[] arrayJug) {
 
+		System.out.println("Ranking: ");
+		for (int i = 0; i < jugadores.length; i++) {
+			System.out.println((i + 1) + ": " + arrayJug[i].getNombre());
+		}
 	}
 
 }

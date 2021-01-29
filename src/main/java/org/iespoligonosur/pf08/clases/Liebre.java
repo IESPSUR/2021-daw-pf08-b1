@@ -26,7 +26,6 @@ public class Liebre extends JugadorBasico {
 		if (dadoValor == 3) {
 			setRecorridoTotal(dadoValor);
 			setUltimaTirada(dadoValor);
-			System.out.println(getCaminos() + getNombre());
 		} else {
 			apuesta(dadoValor);
 		}
@@ -48,7 +47,7 @@ public class Liebre extends JugadorBasico {
 		boolean format = false;
 		String res;
 		do {
-			System.out.println(getNombre() + ", el n√∫mero que ha salido es mayor o menor que 3? (mayor/menor)");
+			System.out.println(getNombre() + ", el numero que ha salido es mayor o menor que 3? (mayor/menor)");
 			res = sc.next();
 			if (res.equalsIgnoreCase("menor") || res.equalsIgnoreCase("mayor")) {
 				format = true;
@@ -57,9 +56,8 @@ public class Liebre extends JugadorBasico {
 		if (res.equalsIgnoreCase(mayMen)) {
 			setUltimaTirada(dadoValor);
 			setRecorridoTotal(dadoValor);
-			System.out.println(getCaminos() + getNombre());
 		} else {
-			System.out.println(getCaminos() + getNombre() + ": No puede mover");
+			System.out.println("No has acertado!! No podr·s avanzar!");
 		}
 
 	}
