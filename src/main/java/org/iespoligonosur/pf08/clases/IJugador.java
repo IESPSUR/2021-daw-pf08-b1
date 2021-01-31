@@ -42,7 +42,7 @@ public interface IJugador {
 	 * 
 	 * @return int
 	 */
-	public int getRecorrido();
+	public double getRecorrido();
 
 	/**
 	 * Devuelve un String de caminos para pintarlos en la consola

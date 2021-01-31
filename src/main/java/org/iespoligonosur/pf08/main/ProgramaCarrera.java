@@ -15,7 +15,6 @@ import org.iespoligonosur.pf08.clases.Tortuga;
 public class ProgramaCarrera {
 
 	private static IJugador[] jugadores;
-
 	private static int longitudPistaCarreras = 100;
 	private static LocalDateTime inicioPartida;
 	private static LocalDateTime finalPartida;
@@ -34,20 +33,39 @@ public class ProgramaCarrera {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-
-		System.out.println("Bienvenido al juego");
+		String resRep = "";
+		String resUsu = "Si";
 		do {
-			System.out.println("�Cu�ntos usuarios van a jugar?");
-			numero = sc.nextInt();
-			if (2 > numero || numero > 6) {
-				System.out.println("Numero incorrecto, el numero de jugadores es de 2 a 6 usuarios por partida");
+			Scanner sc = new Scanner(System.in);
+
+			System.out.println("Bienvenido al juego");
+			if (resUsu.equalsIgnoreCase("Si")) {
+				do {
+					System.out.println("�Cu�ntos usuarios van a jugar?");
+					numero = sc.nextInt();
+					if (2 > numero || numero > 6) {
+						System.out
+								.println("Numero incorrecto, el numero de jugadores es de 2 a 6 usuarios por partida");
+					}
+				} while (2 > numero || numero > 6);
+				jugadores = new IJugador[numero];
+				creaJugadores();
 			}
-		} while (2 > numero || numero > 6);
-		jugadores = new IJugador[numero];
-		creaJugadores();
-		iniciaPartida();
-		ejecutaTurno();
+			iniciaPartida();
+			System.out.println("Quieres repetir la carrera?(Si/No)");
+			resRep = sc.next();
+			if(resRep.equalsIgnoreCase("Si")) {
+				for(int i = 0;i<jugadores.length;i++) {
+					jugadores[i].resetea();
+				}
+			}else {
+				System.out.println("¡Muchas gracias a todos vosotros!");
+				System.exit(0);
+			}
+			System.out.println("Quieres realizar la carrera con nuevos usuarios?(Si/No)");
+			resUsu = sc.next();
+			
+		} while (resRep.equalsIgnoreCase("Si"));
 	}
 
 	/**
@@ -107,7 +125,6 @@ public class ProgramaCarrera {
 		System.out.println("La partida ha terminado");
 		finalPartida = LocalDateTime.now();
 		imprimeEstadisticaCarrera();
-		System.exit(0);
 	}
 
 	private static void pintaIniPartida() {
@@ -157,11 +174,11 @@ public class ProgramaCarrera {
 		LocalTime ini = inicioPartida.toLocalTime();
 		LocalTime fin = finalPartida.toLocalTime();
 
-		//El ranking:
+		// El ranking:
 		imprimeJugadoresOrdenados(ordenaRanking());
 		System.out.println("__________________________________________________________________");
 
-		//Calculando la duración de la partida:
+		// Calculando la duración de la partida:
 		int duracion = (int) ChronoUnit.MINUTES.between(ini, fin);
 		DateTimeFormatter DateHour = DateTimeFormatter.ofPattern("dd MM yyyy hh:mm:ss");
 		String formatDateIni = inicioPartida.format(DateHour);
@@ -169,9 +186,9 @@ public class ProgramaCarrera {
 		System.out.println("La partida comenzo: " + formatDateIni + "\nLa partida termino: " + formatDateFin
 				+ "\nLa partida duro: " + duracion + " minutos.");
 		System.out.println("__________________________________________________________________");
-		
+
 		System.out.println("En esta partida han participado " + jugadores.length + " usuarios.");
-		
+
 		System.out.println("El jugador con maxima velocidad punta: " + masVeloz().getNombre() + ". La velocidad: "
 				+ masVeloz().getVelocidadAlcanzadaMaxima());
 		// Convirtiendo la media de velocidad de double a String para limitar la

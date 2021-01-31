@@ -94,7 +94,7 @@ public abstract class JugadorBasico implements IJugador {
 	}
 
 	@Override
-	public int getRecorrido() {
+	public double getRecorrido() {
 		return recorrido;
 	}
 
