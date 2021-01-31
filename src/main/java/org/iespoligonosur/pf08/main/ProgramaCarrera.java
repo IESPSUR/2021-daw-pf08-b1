@@ -38,7 +38,7 @@ public class ProgramaCarrera {
 
 		System.out.println("Bienvenido al juego");
 		do {
-			System.out.println("¿Cuántos usuarios van a jugar?");
+			System.out.println("ï¿½Cuï¿½ntos usuarios van a jugar?");
 			numero = sc.nextInt();
 			if (2 > numero || numero > 6) {
 				System.out.println("Numero incorrecto, el numero de jugadores es de 2 a 6 usuarios por partida");
@@ -57,25 +57,32 @@ public class ProgramaCarrera {
 	private static void creaJugadores() {
 
 		int animal;
+		String nombreUsu = "";
 		for (int i = 0; i < numero; i++) {
 
+			System.out.println("Jugador " + (i + 1) + ": ");
+			System.out.println("ï¿½Cual quieres que sea tu alias en el juego?");
+			nombreUsu = sc.next();
 			do {
-				System.out.println("Jugador " + (i + 1) + ": ");
-				System.out.println("¿Cual quieres que sea tu alias en el juego?");
-				String nombreUsu = sc.next();
-				System.out.println("Elige el animal que quieras:\n 1.Tortuga\n 2.Liebre\n 3.CorreCaminos");
-				animal = sc.nextInt();
-
-				switch (animal) {
-				case 1:
-					jugadores[i] = new Tortuga(nombreUsu);
-					break;
-				case 2:
-					jugadores[i] = new Liebre(nombreUsu);
-					break;
-				case 3:
-					jugadores[i] = new CorreCamino(nombreUsu);
-					break;
+				try {
+					System.out.println("Elige el animal que quieras:\n 1.Tortuga\n 2.Liebre\n 3.CorreCaminos");
+					animal = sc.nextInt();
+				} catch (InputMismatchException e) {
+					animal = 0;
+					sc.next();
+				}
+				if (animal <= 3 && animal > 0) {
+					switch (animal) {
+					case 1:
+						jugadores[i] = new Tortuga(nombreUsu);
+						break;
+					case 2:
+						jugadores[i] = new Liebre(nombreUsu);
+						break;
+					case 3:
+						jugadores[i] = new CorreCamino(nombreUsu);
+						break;
+					}
 				}
 			} while (animal > 3 || animal <= 0);
 
@@ -89,12 +96,12 @@ public class ProgramaCarrera {
 	 * longitud determinada para la pista alcanzando la meta.
 	 */
 	private static void iniciaPartida() {
-		System.out.println("¡Empieza la partida!");
+		System.out.println("ï¿½Empieza la partida!");
 		pintaIniPartida();
 		inicioPartida = LocalDateTime.now();
 
 		while (jugadores[ganador].getRecorrido() < longitudPistaCarreras) {
-			System.out.println("Turno Siguiente:");
+			System.out.println("Carrera:");
 			ejecutaTurno();
 		}
 		System.out.println("La partida ha terminado");
@@ -117,6 +124,7 @@ public class ProgramaCarrera {
 	private static void pintaCarrera(IJugador jugador) {
 		System.out.println(jugador.getCaminos() + jugador.getNombre());
 	}
+
 	/**
 	 * Este metodo llama al metodo avanza para cada uno de los participantes de la
 	 * carrea para ejecutar un turno de la carrera
@@ -149,10 +157,11 @@ public class ProgramaCarrera {
 		LocalTime ini = inicioPartida.toLocalTime();
 		LocalTime fin = finalPartida.toLocalTime();
 
+		//El ranking:
 		imprimeJugadoresOrdenados(ordenaRanking());
 		System.out.println("__________________________________________________________________");
 
-		imprimeJugadoresOrdenados(ordenaRanking());
+		//Calculando la duraciÃ³n de la partida:
 		int duracion = (int) ChronoUnit.MINUTES.between(ini, fin);
 		DateTimeFormatter DateHour = DateTimeFormatter.ofPattern("dd MM yyyy hh:mm:ss");
 		String formatDateIni = inicioPartida.format(DateHour);
@@ -160,7 +169,9 @@ public class ProgramaCarrera {
 		System.out.println("La partida comenzo: " + formatDateIni + "\nLa partida termino: " + formatDateFin
 				+ "\nLa partida duro: " + duracion + " minutos.");
 		System.out.println("__________________________________________________________________");
+		
 		System.out.println("En esta partida han participado " + jugadores.length + " usuarios.");
+		
 		System.out.println("El jugador con maxima velocidad punta: " + masVeloz().getNombre() + ". La velocidad: "
 				+ masVeloz().getVelocidadAlcanzadaMaxima());
 		// Convirtiendo la media de velocidad de double a String para limitar la
@@ -168,13 +179,9 @@ public class ProgramaCarrera {
 		DecimalFormat df = new DecimalFormat("#.00");
 		String mediaF = df.format(mayorMedia().getVelocidadMedia());
 
-
 		System.out.println(
 				"El jugador con maxima velocidad media: " + mayorMedia().getNombre() + ". La velocidad: " + mediaF);
 
-		System.out.println("El jugador con maxima velocidad media: " + mayorMedia().getNombre()
-				+ ". La velocidad: " + mediaF);
-	
 	}
 
 	/**
